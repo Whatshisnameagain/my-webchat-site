@@ -1,0 +1,100 @@
+<!-- HTML: Container for the webchat -->
+<div id="webchat-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;"></div>
+
+<!-- Including Rasa Webchat JavaScript library -->
+<script src="https://cdn.jsdelivr.net/npm/rasa-webchat@1.0.0/dist/rasa-webchat.bundle.js"></script>
+
+<script type="text/javascript">
+  // Initialize Webchat configuration
+  window.WebChat.default({
+    selector: "#webchat-container",   // Target container for the chat
+    initPayload: "/get_started",      // Custom message or intent for initial user interaction
+    socketUrl: "https://324f-24-42-40-235.ngrok-free.app",  // Updated with your ngrok public URL
+    title: "Nova Chatbot",            // Title of the chat window
+    subtitle: "How can I assist you?", // Subtitle for the chat interface
+    customData: {                     // Optional: Pass custom data, e.g., user preferences
+      language: "en",                 // Set default language for the chatbot
+      userId: "unique-user-id"       // Unique user identifier (if needed for session)
+    },
+    openModal: true,                  // Whether the chat should open automatically on page load
+    showMessageDate: true,            // Display date for each message
+    showUserName: true,               // Display the user's name in conversation
+    messageDelay: 300,                // Delay before showing each message
+    storage: "local",                 // Store session data in local storage (optional)
+    
+    // Customizable Theme (branding and UI)
+    theme: {
+      primaryColor: "#4CAF50",          // Primary color (adjust to match your branding)
+      backgroundColor: "#ffffff",       // Background color of the chat window
+      fontColor: "#333333",             // Text color of the chat window
+      headerBackgroundColor: "#3b8b3f", // Header background color
+      headerFontColor: "#ffffff",       // Font color for the header
+      inputBoxBackgroundColor: "#f0f0f0", // Input box background color
+      inputBoxFontColor: "#333333",     // Input box text color
+      buttonColor: "#4CAF50",           // Button color for quick replies
+      buttonTextColor: "#ffffff",       // Button text color
+      fontSize: "16px",                 // Base font size for the conversation
+      borderRadius: "8px",              // Rounded corners for the chat box
+      buttonRadius: "5px"               // Rounded corners for buttons
+    },
+
+    // Customize the chatbot avatar (optional)
+    customStyle: {
+      botAvatar: "https://i.imgur.com/abc123.jpg",  // Replace with your bot's avatar URL
+      userAvatar: "https://i.imgur.com/LdoKDiK.jpg" // URL for the user's avatar
+    },
+
+    // Rich Media Support (images, videos, etc.)
+    customPayloads: [
+      {
+        action: "image",         // Action type
+        image: "https://example.com/path-to-image.jpg"  // Example image URL for rich media
+      },
+      {
+        action: "video",         // Action type for videos
+        video: "https://example.com/path-to-video.mp4" // Example video URL
+      }
+    ],
+
+    // Proactive Messaging (bot asks questions or prompts)
+    proactiveMessage: {
+      message: "Hi, can I help you with something today?", // Initial proactive message
+      delay: 5000,      // Delay before sending the proactive message
+      userCondition: function () { return true; },  // Condition to show message (true for always)
+    },
+
+    // Use Webhooks or REST API for more advanced integration (optional)
+    webhook: {
+      url: "https://example.com/webhook",  // Webhook URL for advanced functionality
+      method: "POST",                     // HTTP method for the webhook request
+      headers: {
+        "Authorization": "Bearer <API-KEY>" // Optional: API key or token for authorization
+      }
+    },
+
+    // Optional Event Tracking & Analytics (e.g., Firebase, Google Analytics)
+    analytics: {
+      trackUserData: true,                // Enable user interaction tracking
+      googleAnalytics: "UA-XXXXXX-X"      // Google Analytics tracking ID (if needed)
+    }
+  });
+</script>
+
+<!-- Optional: Include a chat sound effect when receiving a message (user experience enhancement) -->
+<audio id="chat-sound" src="https://example.com/chat-sound.mp3" preload="auto"></audio>
+
+<script type="text/javascript">
+  // Play sound on receiving a new message
+  document.addEventListener('message', function(event) {
+    var sound = document.getElementById("chat-sound");
+    sound.play();
+  });
+</script>
+
+<!-- Optional: Include a scroll-to-bottom feature to ensure new messages are visible -->
+<script type="text/javascript">
+  window.addEventListener("load", function () {
+    const chatWindow = document.getElementById("webchat-container");
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+  });
+</script>
